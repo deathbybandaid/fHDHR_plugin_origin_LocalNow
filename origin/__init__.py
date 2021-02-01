@@ -48,6 +48,7 @@ class Plugin_OBJ():
             channel_stream_json = self.plugin_utils.web.session.post(self.stream_url_post, data=json.dumps(channel_post)).json()
         except json.JSONDecodeError as err:
             print(err)
+            return None
         print(channel_stream_json)
 
         streamurl = channel_stream_json['url']
