@@ -13,7 +13,7 @@ class Plugin_OBJ():
 
         channel_list = []
 
-        channels_json = self.fhdhr.web.session.get(self.base_api).json()["data"]["channels"]
+        channels_json = self.plugin_utils.web.session.get(self.base_api).json()["data"]["channels"]
         for channel_dict in channels_json:
 
             clean_station_item = {
@@ -28,7 +28,7 @@ class Plugin_OBJ():
 
     def get_channel_stream(self, chandict, stream_args):
 
-        channels_json = self.fhdhr.web.session.get(self.base_api).json()
+        channels_json = self.plugin_utils.web.session.get(self.base_api).json()
         origin_chandict = self.get_channel_dict(channels_json, "identifier", chandict["origin_id"])
         streamdict = self.get_channel_dict(origin_chandict["streams"], "StreamType", 'website')
 
@@ -40,7 +40,7 @@ class Plugin_OBJ():
                                     }
                         }
 
-        channel_stream_json = self.fhdhr.web.session.post(self.stream_url_post, data=json.dumps(channel_post)).json()
+        channel_stream_json = self.plugin_utils.web.session.post(self.stream_url_post, data=json.dumps(channel_post)).json()
         print(channel_stream_json)
 
         streamurl = streamdict['url']

@@ -13,7 +13,7 @@ class Plugin_OBJ():
     def update_epg(self):
         programguide = {}
 
-        channels_json = self.fhdhr.web.session.get(self.base_api).json()["data"]["channels"]
+        channels_json = self.plugin_utils.web.session.get(self.base_api).json()["data"]["channels"]
         for channel_dict in channels_json:
 
             chan_obj = self.channels.get_channel_obj("origin_id", channel_dict["id"], self.plugin_utils.namespace)
