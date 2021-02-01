@@ -15,7 +15,7 @@ class Plugin_OBJ():
         cookies = self.plugin_utils.web.session.get("https://localnow.com/channels/newsy").cookies.get_dict()
         creds["guid"] = cookies["_ln_guid"]
 
-        location_json = self.plugin_utils.web.session.get("https://prod.localnowapi.com/gis/api/v1/City/Search?Text=%s" % self.postalcode).json()
+        location_json = self.plugin_utils.web.session.options("https://prod.localnowapi.com/gis/api/v1/City/Search?Text=%s" % self.postalcode).json()
         print(location_json)
 
         return creds
