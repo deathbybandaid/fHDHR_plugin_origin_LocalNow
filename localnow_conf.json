@@ -1,0 +1,8 @@
+{
+  "localnow":{
+              "postalcode": "none",
+              "config_file": true,
+              "config_web": false,
+              "required": true
+            }
+}

@@ -8,11 +8,31 @@ class Plugin_OBJ():
 
         self.base_api = 'https://localnow.com/api/dsp/live/epg'
         self.stream_url_post = "https://localnow.com/api/ln/get-video"
-        self.cookie = self.get_cookie()
+        self.creds = self.get_creds()
 
-    def get_cookie(self):
+    def get_creds(self):
+        creds = {}
         cookies = self.plugin_utils.web.session.get("https://localnow.com/channels/newsy").cookies.get_dict()
-        return cookies["_ln_guid"]
+        creds["guid"] = cookies["_ln_guid"]
+
+        location_json = self.plugin_utils.web.session.get("https://prod.localnowapi.com/gis/api/v1/City/Search?Text=%s" % self.postalcode).json()
+        print(location_json)
+
+        return creds
+
+    @property
+    def postalcode(self):
+        if self.plugin_utils.config.dict["localnow"]["postalcode"]:
+            return self.plugin_utils.config.dict["localnow"]["postalcode"]
+        try:
+            postalcode_url = 'http://ipinfo.io/json'
+            postalcode_req = self.plugin_utils.web.session.get(postalcode_url)
+            data = postalcode_req.json()
+            postalcode = data["postal"]
+        except Exception as e:
+            self.plugin_utils.logger.info("Unable to automatically optain postalcode: %s" % e)
+            postalcode = None
+        return postalcode
 
     def get_channels(self):
 
