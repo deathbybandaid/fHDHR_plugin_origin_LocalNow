@@ -11,9 +11,8 @@ class Plugin_OBJ():
         self.cookie = self.get_cookie()
 
     def get_cookie(self):
-        cookies = self.plugin_utils.web.session.get("https://localnow.com/channels/newsy").cookies
-        for cookie in cookies:
-            print(cookie)
+        cookies = self.plugin_utils.web.session.get("https://localnow.com/channels/newsy").cookies.get_dict()
+        print(cookies)
 
     def get_channels(self):
 
