@@ -29,8 +29,7 @@ class Plugin_OBJ():
     def get_channel_stream(self, chandict, stream_args):
 
         channels_json = self.plugin_utils.web.session.get(self.base_api).json()["data"]["channels"]
-        origin_chandict = self.get_channel_dict(channels_json, "identifier", chandict["origin_id"])
-        streamdict = self.get_channel_dict(origin_chandict["streams"], "StreamType", 'website')
+        origin_chandict = self.get_channel_dict(channels_json, "id", chandict["origin_id"])
 
         channel_post = {
                         "playback": {
@@ -43,7 +42,7 @@ class Plugin_OBJ():
         channel_stream_json = self.plugin_utils.web.session.post(self.stream_url_post, data=json.dumps(channel_post)).json()
         print(channel_stream_json)
 
-        streamurl = streamdict['url']
+        streamurl = channel_stream_json['url']
 
         stream_info = {"url": streamurl}
 
