@@ -8,6 +8,10 @@ class Plugin_OBJ():
 
         self.base_api = 'https://localnow.com/api/dsp/live/epg'
         self.stream_url_post = "https://localnow.com/api/ln/get-video"
+        self.cookie = self.get_cookie()
+
+    def get_cookie(self):
+        print(self.plugin_utils.web.session.get("https://localnow.com/channels/newsy").cookies)
 
     def get_channels(self):
 
