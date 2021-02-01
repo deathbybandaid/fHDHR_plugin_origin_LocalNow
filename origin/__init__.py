@@ -12,7 +12,7 @@ class Plugin_OBJ():
 
     def get_cookie(self):
         cookies = self.plugin_utils.web.session.get("https://localnow.com/channels/newsy").cookies.get_dict()
-        print(cookies)
+        return cookies["_ln_guid"]
 
     def get_channels(self):
 
@@ -44,7 +44,10 @@ class Plugin_OBJ():
                                     }
                         }
 
-        channel_stream_json = self.plugin_utils.web.session.post(self.stream_url_post, data=json.dumps(channel_post)).json()
+        try:
+            channel_stream_json = self.plugin_utils.web.session.post(self.stream_url_post, data=json.dumps(channel_post)).json()
+        except json.JSONDecodeError as err:
+            print(err)
         print(channel_stream_json)
 
         streamurl = channel_stream_json['url']
