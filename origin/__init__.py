@@ -6,12 +6,17 @@ class Plugin_OBJ():
     def __init__(self, plugin_utils):
         self.plugin_utils = plugin_utils
 
-        self.tuners = self.plugin_utils.config.dict["localnow"]["tuners"]
-        self.stream_method = self.plugin_utils.config.dict["localnow"]["stream_method"]
-
         self.base_api = 'https://localnow.com/api/dsp/live/epg'
         self.stream_url_post = "https://localnow.com/api/ln/get-video"
         self.creds = self.get_creds()
+
+    @property
+    def tuners(self):
+        return self.plugin_utils.config.dict["localnow"]["tuners"]
+
+    @property
+    def stream_method(self):
+        return self.plugin_utils.config.dict["localnow"]["stream_method"]
 
     def get_creds(self):
         creds = {}
